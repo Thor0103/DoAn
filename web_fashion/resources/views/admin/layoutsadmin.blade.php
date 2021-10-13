@@ -90,12 +90,19 @@
                                 </li>
 
                                 <li>
-                                    <a href="component-extra-divider.html">Divider</a>
+                                    <a href="{{route('product-size.index')}}">Size sản phẩm</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{route('product-brand.index')}}">Thương hiệu sản phẩm</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('product-sale.index')}}">Khuyến mãi</a>
                                 </li>
 
                             </ul>
-
                         </li>
+                        
 
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
