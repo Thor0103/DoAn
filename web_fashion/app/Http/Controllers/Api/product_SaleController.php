@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\product_sale;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Session;
 
 class product_SaleController extends Controller
 {
@@ -14,18 +16,10 @@ class product_SaleController extends Controller
      */
     public function index()
     {
-        //
+        $sale = product_sale::all();
+        return view('admin.productSale.get_Sale')->with(compact('sale'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +29,10 @@ class product_SaleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sale = new  product_sale();
+        $sale->SaleName = $request->sale;
+        $sale->save();
+        return redirect()->back();
     }
 
     /**
@@ -44,22 +41,13 @@ class product_SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($product_sale)
     {
-        //
+        $sales = product_sale::find($product_sale);
+        return view('admin.productSale.edit_Sale')->with(compact('sales'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *
@@ -67,9 +55,14 @@ class product_SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $product_sale)
     {
-        //
+        $data = $request->all();
+        $sale = product_sale::find($product_sale);
+        $sale->SaleName = $data['sale'];
+        $sale->save();
+        Session::put('users', 'Update Successfully ');
+        return \Redirect::route('product-sale.index')->with('users','Update Successfully !');
     }
 
     /**
@@ -78,8 +71,9 @@ class product_SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($product_sale)
     {
-        //
+        product_sale::find($product_sale)->delete();
+        return response()->json(['data'=>'removed'],200);
     }
 }

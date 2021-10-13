@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
+use App\Models\product_brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Session;
 class product_BrandController extends Controller
 {
     /**
@@ -14,19 +14,11 @@ class product_BrandController extends Controller
      */
     public function index()
     {
-        //
+        $brand = product_brand::all();
+        return view('admin.productBrand.get_Brand')->with(compact('brand'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
+ 
     /**
      * Store a newly created resource in storage.
      *
@@ -35,7 +27,10 @@ class product_BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $brand = new  product_brand();
+        $brand->BrandName = $request->brand;
+        $brand->save();
+        return redirect()->back();
     }
 
     /**
@@ -44,21 +39,13 @@ class product_BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($product_brand)
     {
-        //
+        $brands = product_brand::find($product_brand);
+        return view('admin.productBrand.edit_Brand')->with(compact('brands'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +54,14 @@ class product_BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $product_brand)
     {
-        //
+        $data = $request->all();
+        $brand = product_brand::find($product_brand);
+        $brand->BrandName = $data['brand'];
+        $brand->save();
+        Session::put('users', 'Update Successfully ');
+        return \Redirect::route('product-brand.index')->with('users','Update Successfully !');
     }
 
     /**
@@ -78,8 +70,9 @@ class product_BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($product_brand)
     {
-        //
+        product_brand::find($product_brand)->delete();
+        return response()->json(['data'=>'removed'],200);
     }
 }

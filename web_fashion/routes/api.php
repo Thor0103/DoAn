@@ -19,4 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('customer','Api\CustomerController');
 Route::resource('product-type','Api\product_TypeController');
+Route::resource('product-size','Api\product_SizeController');
+Route::resource('product-brand','Api\product_BrandController');
+Route::resource('product-sale','Api\product_SaleController');
 Route::resource('product','Api\ProductController');
+

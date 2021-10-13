@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\product_size;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Session;
 
 class product_SizeController extends Controller
 {
@@ -14,18 +16,11 @@ class product_SizeController extends Controller
      */
     public function index()
     {
-        //
+        $size = product_size::all();
+        return view('admin.productSize.get_Size')->with(compact('size'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +30,10 @@ class product_SizeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $size = new  product_size();
+        $size->SizeName = $request->size;
+        $size->save();
+        return redirect()->back();
     }
 
     /**
@@ -44,21 +42,12 @@ class product_SizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($product_size)
     {
-        //
+        $sizes = product_size::find($product_size);
+        return view('admin.productSize.edit_Size')->with(compact('sizes'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -67,9 +56,14 @@ class product_SizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $product_size)
     {
-        //
+        $data = $request->all();
+        $size = product_size::find($product_size);
+        $size->SizeName = $data['size'];
+        $size->save();
+        Session::put('users', 'Update Successfully ');
+        return \Redirect::route('product-size.index')->with('users','Update Successfully !');
     }
 
     /**
@@ -78,8 +72,9 @@ class product_SizeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($product_size)
     {
-        //
+        product_size::find($product_size)->delete();
+        return response()->json(['data'=>'removed'],200);
     }
 }
