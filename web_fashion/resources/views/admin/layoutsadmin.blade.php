@@ -14,10 +14,17 @@
     <link rel="stylesheet" href="{{asset('admin/assets/css/bootstrap.css')}}">
 
     <link rel="stylesheet" href="{{asset('admin/assets/vendors/simple-datatables/style.css')}}">
-
+    
     <link rel="stylesheet" href="{{asset('/admin/assets/vendors/perfect-scrollbar/perfect-scrollbar.css')}}">
     <link rel="stylesheet" href="{{asset('/admin/assets/css/app.css')}}">
     <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.svg')}}" type="image/x-icon">
+    <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            CKEDITOR.replace('ckeditor_desc');
+        })
+</script>
+
 </head>
 
 <body>
@@ -244,7 +251,7 @@
     <script src="{{asset('admin/assets/js/feather-icons/feather.min.js')}}"></script>
     <script src="{{asset('admin/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/app.js')}}"></script>
-
+    <script src="{{asset('js/load_img.js')}}"></script>
     <script src="{{asset('admin/assets/vendors/simple-datatables/simple-datatables.js')}}"></script>
     <script src="{{asset('admin/assets/js/vendors.js')}}"></script>
     <script src="{{asset('admin/assets/js/main.js')}}"></script>

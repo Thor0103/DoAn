@@ -41,6 +41,7 @@
     </tbody>
 </table>
 </div>
+	
 @include('admin.productType.add_Type')
 
 @endsection
