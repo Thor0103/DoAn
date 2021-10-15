@@ -25,11 +25,15 @@
                             <h3>Sign In</h3>
                             <p>Please sign in to continue to Voler.</p>
                         </div>
-                        <form action="index.html">
+                        @if (session('message'))
+                            <p style="color:red;text-align:center;">{{session('message')}}</p>
+                        @endif
+                        <form action="{{route('admins.check')}}" method="POST">
+                            {{csrf_field()}}
                             <div class="form-group position-relative has-icon-left">
                                 <label for="username">Username</label>
                                 <div class="position-relative">
-                                    <input type="text" class="form-control" id="username">
+                                    <input name="user" type="text" class="form-control" id="username" require="">
                                     <div class="form-control-icon">
                                         <i data-feather="user"></i>
                                     </div>
@@ -43,7 +47,7 @@
                                     </a>
                                 </div>
                                 <div class="position-relative">
-                                    <input type="password" class="form-control" id="password">
+                                    <input name="pass" type="password" class="form-control" id="password" require="" >
                                     <div class="form-control-icon">
                                         <i data-feather="lock"></i>
                                     </div>
@@ -58,6 +62,7 @@
                                 <button class="btn btn-primary float-end">Submit</button>
                             </div>
                         </form>
+                        
                         <div class="divider">
                             <div class="divider-text">ThorMeTal</div>
                         </div>

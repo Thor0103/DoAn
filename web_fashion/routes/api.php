@@ -17,8 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('admim','Api\AdminController@login')->name('admin.login');
-Route::get('admims','Api\AdminController@signUp')->name('admins.signUp');
+Route::get('homes','Api\AdminController@home')->name('homes.home');
+Route::get('admin','Api\AdminController@login')->name('admin.login');
+Route::post('admins','Api\AdminController@check')->name('admins.check');
+Route::get('adminss','Api\AdminController@logout')->name('adminss.logout');
+
 
 Route::resource('customer','Api\CustomerController');
 Route::resource('product-type','Api\product_TypeController');

@@ -9,6 +9,16 @@ use Session;
 
 class product_SizeController extends Controller
 {
+
+    public function authenLogin(){
+        $admin_user = Session::get('admin_user');
+
+        if($admin_user){
+            return Redirect::to('homes');
+        }else{
+            return Redirect::to('admin');
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +26,7 @@ class product_SizeController extends Controller
      */
     public function index()
     {
+        $this->authenLogin();
         $size = product_size::all();
         return view('admin.productSize.get_Size')->with(compact('size'));
     }
@@ -30,6 +41,7 @@ class product_SizeController extends Controller
      */
     public function store(Request $request)
     {
+       
         $size = new  product_size();
         $size->SizeName = $request->size;
         $size->save();
@@ -44,6 +56,7 @@ class product_SizeController extends Controller
      */
     public function show($product_size)
     {
+       
         $sizes = product_size::find($product_size);
         return view('admin.productSize.edit_Size')->with(compact('sizes'));
     }
@@ -58,6 +71,7 @@ class product_SizeController extends Controller
      */
     public function update(Request $request, $product_size)
     {
+        $this->authenLogin();
         $data = $request->all();
         $size = product_size::find($product_size);
         $size->SizeName = $data['size'];
@@ -74,6 +88,7 @@ class product_SizeController extends Controller
      */
     public function destroy($product_size)
     {
+        $this->authenLogin();
         product_size::find($product_size)->delete();
         return response()->json(['data'=>'removed'],200);
     }

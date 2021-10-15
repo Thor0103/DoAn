@@ -40,11 +40,11 @@
                         <li class='sidebar-title'>Main Menu</li>
 
                         <li class="sidebar-item  ">
-                            <a href="index.html" class='sidebar-link'>
+                            <a href="{{route('homes.home')}}" class='sidebar-link'>
                                 <i data-feather="home" width="20"></i>
                                 <span>Home</span>
                             </a>
-
+                            
                         </li>
 
                         <li class="sidebar-item  has-sub">
@@ -57,11 +57,7 @@
 
                                 <li>
                                     <a href="{{route('customer.index')}}">Khách hàng</a>
-                                </li>
-
-                                <li>
-                                    <a href="{{route('admin.login')}}">Dang nhap</a>
-                                </li>
+                                </li>                         
 
                                 <li>
                                     <a href="component-breadcrumb.html">ss</a>
@@ -165,7 +161,7 @@
                                 <a class="dropdown-item active" href="#"><i data-feather="mail"></i> Nhắn tin</a>
                                 <a class="dropdown-item" href="#"><i data-feather="settings"></i> Cài đặt</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i data-feather="log-out"></i> Đăng xuất</a>
+                                <a class="dropdown-item" href="{{route('adminss.logout')}}"><i data-feather="log-out"></i> Đăng xuất</a>
                             </div>
                         </li>
                     </ul>
@@ -194,11 +190,7 @@
                         <!-- <div class="card-header">
                             Simple Datatable
                         </div> -->
-                    @if (Session::has('users'))   
-                        <div class="alert alert-primary" role="alert">
-                            <p>{{Session::get('success')}}</p>
-                        </div>
-                    @endif
+                 
                   @yield('admin')
 
                     </div>

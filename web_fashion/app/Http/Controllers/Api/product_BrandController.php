@@ -7,6 +7,15 @@ use App\Http\Controllers\Controller;
 use Session;
 class product_BrandController extends Controller
 {
+    public function authenLogin(){
+        $admin_user = Session::get('admin_user');
+
+        if($admin_user){
+            return Redirect::to('homes');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +23,7 @@ class product_BrandController extends Controller
      */
     public function index()
     {
+        $this->authenLogin();
         $brand = product_brand::all();
         return view('admin.productBrand.get_Brand')->with(compact('brand'));
     }
@@ -27,6 +37,7 @@ class product_BrandController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authenLogin();
         $brand = new  product_brand();
         $brand->BrandName = $request->brand;
         $brand->save();
@@ -41,6 +52,7 @@ class product_BrandController extends Controller
      */
     public function show($product_brand)
     {
+        $this->authenLogin();
         $brands = product_brand::find($product_brand);
         return view('admin.productBrand.edit_Brand')->with(compact('brands'));
     }
@@ -56,6 +68,7 @@ class product_BrandController extends Controller
      */
     public function update(Request $request, $product_brand)
     {
+        $this->authenLogin();
         $data = $request->all();
         $brand = product_brand::find($product_brand);
         $brand->BrandName = $data['brand'];
@@ -72,6 +85,7 @@ class product_BrandController extends Controller
      */
     public function destroy($product_brand)
     {
+        $this->authenLogin();
         product_brand::find($product_brand)->delete();
         return response()->json(['data'=>'removed'],200);
     }

@@ -12,8 +12,22 @@ use App\Http\Controllers\Controller;
 use Storage;
 use File;
 use DateTime;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+session_start();
 class ProductController extends Controller
 {
+
+
+    public function authenLogin(){
+        $admin_user = Session::get('admin_user');
+
+        if($admin_user){
+            return Redirect::to('api/homes');
+        }else{
+            return Redirect::to('api/admin')->send();
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +35,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-
+        $this->authenLogin();
         $products = Product::with('product_Type','product_Size','product_Sale','product_Brand')->orderBy('ProductID','DESC')->get();
         return view('admin.product.get_Products')->with(compact('products'));
     }
@@ -33,6 +47,7 @@ class ProductController extends Controller
      */
     public function create()
     {
+        
         $type = product_type::where('Status',1)->get();
         $brand = product_brand::all();
         $sale = product_sale::all();
@@ -48,6 +63,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+       
         $product = new Product();
         $product -> ProductName = $request->name;
         $product -> ProductPrice = $request->price;
@@ -83,6 +99,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {   
+       
         $sales =product_sale::all();
         $sizes =product_size::all();
         $brands =product_brand::all();
@@ -111,6 +128,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+       
         $product =  Product::find($id);
         $product -> ProductName = $request->name;
         $product -> ProductPrice = $request->price;
@@ -145,6 +163,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        
         // $path = 'public/uploads/';
         // unlink($path.$id->ProductImage);
         Product::find($id)->delete();

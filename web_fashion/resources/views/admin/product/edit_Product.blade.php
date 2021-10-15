@@ -1,7 +1,7 @@
-
+@extends('admin.layoutsadmin')
 @section('admin')
 <div class="modal-content">
-    <form autocomplete="off" action="" data-url="{{route('product.update',[$product->ProductID])}}" id="form-add" method="POST" role="form" enctype="multipart/form-data">
+    <form autocomplete="off" action="{{route('product.update',[$product->ProductID])}}"   method="POST" role="form" enctype="multipart/form-data">
         @method('PUT')
         @csrf
         <div class="modal-header">

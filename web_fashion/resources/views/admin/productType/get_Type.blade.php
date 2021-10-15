@@ -1,11 +1,7 @@
 
 @extends('admin.layoutsadmin')
+@section('admin')
 
-@if (Session::has('users'))   
-       <div class="alert alert-primary" role="alert">
-           <p>{{Session::get('success')}}</p>
-      </div>
-@endif
 <div class="card-body" id="table_load">
 
 <table class='table table-striped' id="table1">
@@ -43,5 +39,4 @@
 </div>
 	
 @include('admin.productType.add_Type')
-
 @endsection

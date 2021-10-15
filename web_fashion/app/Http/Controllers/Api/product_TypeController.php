@@ -6,9 +6,21 @@ use App\Models\product_type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
+use Illuminate\Support\Facades\Redirect;
+session_start();
 
 class product_TypeController extends Controller
 {
+
+    public function authenLogin(){
+        $admin_user = Session::get('admin_user');
+
+        if($admin_user){
+            return Redirect::to('homes');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +28,7 @@ class product_TypeController extends Controller
      */
     public function index()
     {
+        $this->authenLogin();
         $type = product_type::where('Status',1)->get();
         return view('admin.productType.get_Type')->with(compact('type'));
     }
@@ -28,6 +41,7 @@ class product_TypeController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authenLogin();
         $type = new  product_type();
         $type->TypeName = $request->type;
         $type->Status = '1';
@@ -43,6 +57,7 @@ class product_TypeController extends Controller
      */
     public function show( $product_type)
     {
+        $this->authenLogin();
         $types = product_type::find($product_type);
         return view('admin.productType.edit')->with(compact('types'));
          
@@ -56,7 +71,7 @@ class product_TypeController extends Controller
      */
     public function update(Request $request,  $product_type)
     {
-       
+        $this->authenLogin();
         $data = $request->all();
         $type = product_type::find($product_type);
         $type->TypeName = $data['type'];
@@ -73,6 +88,7 @@ class product_TypeController extends Controller
      */
     public function destroy( $product_type)
     {
+        $this->authenLogin();
         product_type::find($product_type)->delete();
         return response()->json(['data'=>'removed'],200);
     }

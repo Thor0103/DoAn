@@ -9,6 +9,15 @@ use Session;
 
 class product_SaleController extends Controller
 {
+    public function authenLogin(){
+        $admin_user = Session::get('admin_user');
+
+        if($admin_user){
+            return Redirect::to('homes');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +25,7 @@ class product_SaleController extends Controller
      */
     public function index()
     {
+        $this->authenLogin();
         $sale = product_sale::all();
         return view('admin.productSale.get_Sale')->with(compact('sale'));
     }
@@ -29,6 +39,7 @@ class product_SaleController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authenLogin();
         $sale = new  product_sale();
         $sale->SaleName = $request->sale;
         $sale->save();
@@ -43,6 +54,7 @@ class product_SaleController extends Controller
      */
     public function show($product_sale)
     {
+        $this->authenLogin();
         $sales = product_sale::find($product_sale);
         return view('admin.productSale.edit_Sale')->with(compact('sales'));
     }
@@ -57,6 +69,7 @@ class product_SaleController extends Controller
      */
     public function update(Request $request, $product_sale)
     {
+        $this->authenLogin();
         $data = $request->all();
         $sale = product_sale::find($product_sale);
         $sale->SaleName = $data['sale'];
@@ -73,6 +86,7 @@ class product_SaleController extends Controller
      */
     public function destroy($product_sale)
     {
+        $this->authenLogin();
         product_sale::find($product_sale)->delete();
         return response()->json(['data'=>'removed'],200);
     }

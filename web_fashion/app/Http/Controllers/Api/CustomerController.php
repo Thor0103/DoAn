@@ -5,16 +5,31 @@ namespace App\Http\Controllers\Api;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+session_start();
 
 class CustomerController extends Controller
 {
+
+    public function authenLogin(){
+        $admin_user = Session::get('admin_user');
+
+        if($admin_user){
+            return Redirect::to('api/homes');
+        }else{
+            return Redirect::to('api/admin')->send();
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {  
+        $this->authenLogin(); 
         $customer = Customer::all();
         return view('admin.customer.get_customer')->with(compact('customer'));
     }
