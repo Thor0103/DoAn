@@ -60,11 +60,11 @@
                                 </li>
 
                                 <li>
-                                    <a href="component-badge.html">Badge</a>
+                                    <a href="{{route('admin.login')}}">Dang nhap</a>
                                 </li>
 
                                 <li>
-                                    <a href="component-breadcrumb.html">Breadcrumb</a>
+                                    <a href="component-breadcrumb.html">ss</a>
                                 </li>
                             </ul>
 
@@ -90,11 +90,11 @@
                                 </li>
 
                                 <li>
-                                    <a href="{{route('product-size.index')}}">Size sản phẩm</a>
+                                    <a href="{{route('product-size.index')}}">Kích thước</a>
                                 </li>
 
                                 <li>
-                                    <a href="{{route('product-brand.index')}}">Thương hiệu sản phẩm</a>
+                                    <a href="{{route('product-brand.index')}}">Thương hiệu</a>
                                 </li>
                                 <li>
                                     <a href="{{route('product-sale.index')}}">Khuyến mãi</a>
@@ -102,43 +102,7 @@
 
                             </ul>
                         </li>
-                        
 
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i data-feather="file-text" width="20"></i>
-                                <span>Form Elements</span>
-                            </a>
-
-                            <ul class="submenu ">
-
-                                <li>
-                                    <a href="form-element-input.html">Input</a>
-                                </li>
-
-                                <li>
-                                    <a href="form-element-input-group.html">Input Group</a>
-                                </li>
-
-                                <li>
-                                    <a href="form-element-select.html">Select</a>
-                                </li>
-
-                                <li>
-                                    <a href="form-element-radio.html">Radio</a>
-                                </li>
-
-                                <li>
-                                    <a href="form-element-checkbox.html">Checkbox</a>
-                                </li>
-
-                                <li>
-                                    <a href="form-element-textarea.html">Textarea</a>
-                                </li>
-
-                            </ul>
-
-                        </li>
 
                     </ul>
                 </div>
@@ -218,8 +182,8 @@
                         <div class="col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class='breadcrumb-header'>
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="">Khang</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Dự</li>
+                                    <li class="breadcrumb-item"><a href=""></a>&#9876;</li>
+                                    <li class="breadcrumb-item active" aria-current="page">&#9876;</li>
                                 </ol>
                             </nav>
                         </div>
@@ -280,24 +244,7 @@
             })
         })
 
-        $('.btn-delete').click(function(){
-            var url = $(this).attr('data-url');
-            var _this = $(this);
-            if (confirm('May co chac muon xoa khong?')) {
-                $.ajax({
-                    type: 'delete',
-                    url: url,
-                    success: function(response) {
-                        alert('Mày xóa thành công rồi đó')
-                        location.reload();
-                    
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        //xử lý lỗi tại đây
-                    }
-                })
-            }
-        })
+       
         
         $('#btn-addproduct').click(function(){
             var url = $(this).attr('data-url');            
@@ -305,12 +252,38 @@
                 type: 'get',
                 url: url,
                 success: function(response) {
-                    $('#selectbrand').empty();              
-                    $.each(response.data, function (k, v) {
-                   
-                     let opt = '<option value = "' + v.Type + '">' + v.TypeName + '</option>';
-                    $('#selectbrand').append(opt);
-                });
+                    $('#selecttype').empty();
+                    $('#selectbrand').empty();
+                    $('#selectsale').empty();
+                    $('#selectsize').empty();
+                        //  Loại
+                        $.each(response.data, function (k, v) {
+                           
+                            let opt = '<option value = "' + v.Type + '">' + v.TypeName + '</option>';
+                            $('#selecttype').append(opt);
+                        });
+                        
+                        //Thuong hieu
+                        $.each(response.brand, function (k, v) {
+                        
+                            let br = '<option value = "' + v.Brand + '">' + v.BrandName + '</option>';
+                            $('#selectbrand').append(br);
+                        });
+
+                        //Sale
+                        $.each(response.sale, function (k, v) {
+                        
+                            let sa = '<option value = "' + v.Sale + '">' + v.SaleName + '   %</option>';
+                            $('#selectsale').append(sa);
+                        });
+
+                        //Size
+
+                        $.each(response.size, function (k, v) {
+                        
+                            let si = '<option value = "' + v.Size + '">' + v.SizeName + '</option>';
+                            $('#selectsize').append(si);
+                        });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     //xử lý lỗi tại đây
@@ -343,7 +316,24 @@
 //     })
 // })
 
-})
+});
+$(document).on('click', "button[name='delete']", function () {
+            var url = $(this).attr('data-url');
+            var _this = $(this);
+            if (confirm('May co chac muon xoa khong?')) {
+                $.ajax({
+                    type: 'delete',
+                    url: url,
+                    success: function(response) {
+                        alert('Mày xóa thành công rồi đó')
+                        location.reload();                       
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //xử lý lỗi tại đây
+                    }
+                })
+            }
+        })
     </script>
 </body>
 </html>

@@ -10,9 +10,9 @@
 </div>
 <thead style="text-align">
         <tr>
-            <th>STT</th>
-            <th>Tên thương hiệu</th>
-            <th> Action</th>            
+            <th style="text-align:center;">STT</th>
+            <th style="text-align:center;">Tên thương hiệu</th>
+            <th style="text-align:center;"> Quản lý</th>            
         </tr>
     </thead>
     <tbody>
@@ -24,12 +24,12 @@
     @php
         $i++
     @endphp                                   
-        <tr style="text-align">
+        <tr style="text-align:center;">
             <td>{{$i}}</td>
             <td>{{$brands->BrandName}}</td>
             <td>     
-                <a href="{{route('product-brand.show',[$brands->Brand])}}" class="btn btn-primary">Sửa</a>
-                <button data-url="{{ route('product-brand.destroy',[$brands->Brand]) }}"​ type="button" id="btn-delete" data-target="#delete" data-toggle="modal" class="btn btn-danger btn-delete">Delete</button>
+                <a href="{{route('product-brand.show',[$brands->Brand])}}" ><img style="width:23px" src="{{asset('/icon/pencil.png')}}" alt=""></a>
+                <button name="delete" style="border:none; background: transparent; margin-left:10px;" data-url="{{ route('product-brand.destroy',[$brands->Brand]) }}"​ type="button" id="btn-delete" data-target="#delete" data-toggle="modal" ><img style="width:23px" src="{{asset('/icon/cancel.png')}}" alt=""></button>
 			</td>                                    
         </tr>
     @endforeach

@@ -17,6 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('admim','Api\AdminController@login')->name('admin.login');
+Route::get('admims','Api\AdminController@signUp')->name('admins.signUp');
+
 Route::resource('customer','Api\CustomerController');
 Route::resource('product-type','Api\product_TypeController');
 Route::resource('product-size','Api\product_SizeController');

@@ -1,6 +1,6 @@
 
 @extends('admin.layoutsadmin')
-@section('admin')
+
 @if (Session::has('users'))   
        <div class="alert alert-primary" role="alert">
            <p>{{Session::get('success')}}</p>
@@ -13,10 +13,10 @@
     <a href="" class="btn btn-success btn-add" data-target="#modal-add" data-toggle="modal">Thêm mới</a>
 </div>
 <thead style="text-align">
-        <tr>
-            <th>STT</th>
-            <th>Tên loại</th>
-            <th> Action</th>            
+        <tr style="text-align:center;">
+            <th style="text-align:center;">STT</th>
+            <th style="text-align:center;">Tên loại</th>
+            <th style="text-align:center;"> Quản lý</th>            
         </tr>
     </thead>
     <tbody>
@@ -28,12 +28,12 @@
     @php
         $i++
     @endphp                                   
-        <tr style="text-align">
+        <tr style="text-align:center;">
             <td>{{$i}}</td>
             <td>{{$types->TypeName}}</td>
             <td>     
-                <a href="{{route('product-type.show',[$types->Type])}}" class="btn btn-primary">Sửa</a>
-                <button data-url="{{ route('product-type.destroy',[$types->Type]) }}"​ type="button" id="btn-delete" data-target="#delete" data-toggle="modal" class="btn btn-danger btn-delete">Delete</button>
+                <a href="{{route('product-type.show',[$types->Type])}}" ><img style="width:23px" src="{{asset('/icon/pencil.png')}}" alt=""></a>
+                <button name="delete" style="border:none; background: transparent; margin-left:10px;" data-url="{{ route('product-type.destroy',[$types->Type]) }}"​ type="button" id="btn-delete" data-target="#delete" data-toggle="modal" ><img style="width:23px" src="{{asset('/icon/cancel.png')}}" alt=""></button>
 			</td>                                    
         </tr>
     @endforeach

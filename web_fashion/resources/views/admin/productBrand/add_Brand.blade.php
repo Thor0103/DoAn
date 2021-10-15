@@ -9,8 +9,8 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group" style="display:flex;">
-						<p style="display:inline;">Tên thương hiệu</p>
-						<input name="brand" type="text" class="form-control" id="hoten-add" placeholder="Kích cỡ.....">
+						<p style="display:inline;text-align:right;">Tên thương hiệu</p>
+						<input style="margin-left: 15px;" name="brand" type="text" class="form-control" id="hoten-add" placeholder="Thương hiệu.....">
 					</div>
 				</div>
 				<div class="modal-footer">
