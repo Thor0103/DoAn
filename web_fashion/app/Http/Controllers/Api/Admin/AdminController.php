@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
 use Session;
 use App\Models\Admin;
@@ -31,9 +31,11 @@ class AdminController extends Controller
         $result = Admin::where('UserName',$user)->where('PassWord',$pass)->first();
 
         if($result){
-                Session::put('admin_name',$request->FullName);
-                Session::put('admin_user',$request->UserName);
-                return view('admin.Authen.home_Admin');
+                $a = $request->FullName;
+                $b = $request->UserName;
+                Session::put('status',$result->Status);
+                Session::put('name',$result->FullName);
+            return view('admin.Authen.home_Admin');
         }else{
                 Session::put('message','Login name or password is incorrect. Please enter again !');
             return view('admin.Authen.login_Admin');
@@ -43,7 +45,8 @@ class AdminController extends Controller
 
     public function logout()
     {    
-        unset($_SESSION['counter']);
+        Session::put('name',null);
+        Session::put('status',null);
         return view('admin.Authen.login_Admin');
     }
 

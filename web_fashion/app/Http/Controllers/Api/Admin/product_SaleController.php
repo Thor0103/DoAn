@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
-use App\Models\product_type;
+use App\Models\product_sale;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
 use Illuminate\Support\Facades\Redirect;
 session_start();
 
-class product_TypeController extends Controller
+class product_SaleController extends Controller
 {
-
     public function authenLogin(){
         $admin_user = Session::get('admin_user');
 
         if($admin_user){
-            return Redirect::to('homes');
+            return Redirect::to('api/homes');
         }else{
-            return Redirect::to('admin')->send();
+            return Redirect::to('api/admin')->send();
         }
     }
     /**
@@ -29,67 +28,68 @@ class product_TypeController extends Controller
     public function index()
     {
         $this->authenLogin();
-        $type = product_type::where('Status',1)->get();
-        return view('admin.productType.get_Type')->with(compact('type'));
+        $sale = product_sale::all();
+        return view('admin.productSale.get_Sale')->with(compact('sale'));
     }
+
 
     /**
      * Store a newly created resource in storage.
-     ** 
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->authenLogin();
-        $type = new  product_type();
-        $type->TypeName = $request->type;
-        $type->Status = '1';
-        $type->save();
+        $sale = new  product_sale();
+        $sale->SaleName = $request->sale;
+        $sale->save();
         return redirect()->back();
     }
-  
 
     /**
      * Display the specified resource.
-     * @param  \App\Models\product_type  $product_type
+     *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show( $product_type)
+    public function show($product_sale)
     {
         $this->authenLogin();
-        $types = product_type::find($product_type);
-        return view('admin.productType.edit')->with(compact('types'));
-         
+        $sales = product_sale::find($product_sale);
+        return view('admin.productSale.edit_Sale')->with(compact('sales'));
     }
+
+    
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\product_type  $product_type
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $product_type)
+    public function update(Request $request, $product_sale)
     {
         $this->authenLogin();
         $data = $request->all();
-        $type = product_type::find($product_type);
-        $type->TypeName = $data['type'];
-        $type->save();
+        $sale = product_sale::find($product_sale);
+        $sale->SaleName = $data['sale'];
+        $sale->save();
         Session::put('users', 'Update Successfully ');
-        return \Redirect::route('product-type.index')->with('users','Update Successfully !');
+        return \Redirect::route('product-sale.index')->with('users','Update Successfully !');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\product_type  $product_type
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $product_type)
+    public function destroy($product_sale)
     {
         $this->authenLogin();
-        product_type::find($product_type)->delete();
+        product_sale::find($product_sale)->delete();
         return response()->json(['data'=>'removed'],200);
     }
 }

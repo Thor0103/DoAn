@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
 use App\Models\product_size;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
+use Illuminate\Support\Facades\Redirect;
+session_start();
 
 class product_SizeController extends Controller
 {
@@ -14,9 +16,9 @@ class product_SizeController extends Controller
         $admin_user = Session::get('admin_user');
 
         if($admin_user){
-            return Redirect::to('homes');
+            return Redirect::to('api/homes');
         }else{
-            return Redirect::to('admin');
+            return Redirect::to('api/admin');
         }
     }
     /**

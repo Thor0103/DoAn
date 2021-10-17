@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Api;
-
-use App\Models\product_sale;
+namespace App\Http\Controllers\Api\Admin;
+use App\Models\product_brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
+use Illuminate\Support\Facades\Redirect;
+session_start();
 
-class product_SaleController extends Controller
+class product_BrandController extends Controller
 {
     public function authenLogin(){
         $admin_user = Session::get('admin_user');
 
         if($admin_user){
-            return Redirect::to('homes');
+            return Redirect::to('api/homes');
         }else{
-            return Redirect::to('admin')->send();
+            return Redirect::to('api/admin')->send();
         }
     }
     /**
@@ -26,11 +27,11 @@ class product_SaleController extends Controller
     public function index()
     {
         $this->authenLogin();
-        $sale = product_sale::all();
-        return view('admin.productSale.get_Sale')->with(compact('sale'));
+        $brand = product_brand::all();
+        return view('admin.productBrand.get_Brand')->with(compact('brand'));
     }
 
-
+ 
     /**
      * Store a newly created resource in storage.
      *
@@ -40,9 +41,9 @@ class product_SaleController extends Controller
     public function store(Request $request)
     {
         $this->authenLogin();
-        $sale = new  product_sale();
-        $sale->SaleName = $request->sale;
-        $sale->save();
+        $brand = new  product_brand();
+        $brand->BrandName = $request->brand;
+        $brand->save();
         return redirect()->back();
     }
 
@@ -52,14 +53,15 @@ class product_SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($product_sale)
+    public function show($product_brand)
     {
         $this->authenLogin();
-        $sales = product_sale::find($product_sale);
-        return view('admin.productSale.edit_Sale')->with(compact('sales'));
+        $brands = product_brand::find($product_brand);
+        return view('admin.productBrand.edit_Brand')->with(compact('brands'));
     }
 
-    
+
+
     /**
      * Update the specified resource in storage.
      *
@@ -67,15 +69,15 @@ class product_SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $product_sale)
+    public function update(Request $request, $product_brand)
     {
         $this->authenLogin();
         $data = $request->all();
-        $sale = product_sale::find($product_sale);
-        $sale->SaleName = $data['sale'];
-        $sale->save();
+        $brand = product_brand::find($product_brand);
+        $brand->BrandName = $data['brand'];
+        $brand->save();
         Session::put('users', 'Update Successfully ');
-        return \Redirect::route('product-sale.index')->with('users','Update Successfully !');
+        return \Redirect::route('product-brand.index')->with('users','Update Successfully !');
     }
 
     /**
@@ -84,10 +86,10 @@ class product_SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($product_sale)
+    public function destroy($product_brand)
     {
         $this->authenLogin();
-        product_sale::find($product_sale)->delete();
+        product_brand::find($product_brand)->delete();
         return response()->json(['data'=>'removed'],200);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Admin;
 
 use App\Models\product_size; 
 use App\Models\product_sale;
@@ -14,18 +14,17 @@ use File;
 use DateTime;
 use Session;
 use Illuminate\Support\Facades\Redirect;
-session_start();
+
 class ProductController extends Controller
 {
 
-
     public function authenLogin(){
-        $admin_user = Session::get('admin_user');
-
-        if($admin_user){
-            return Redirect::to('api/homes');
-        }else{
+        $admin_status = Session::get('name');
+        if($admin_status){
             return Redirect::to('api/admin')->send();
+        }else{
+            return Redirect::to('api/product');
+            
         }
     }
     /**
@@ -35,9 +34,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $this->authenLogin();
+      
         $products = Product::with('product_Type','product_Size','product_Sale','product_Brand')->orderBy('ProductID','DESC')->get();
         return view('admin.product.get_Products')->with(compact('products'));
+        
+        
+
     }
 
     /**

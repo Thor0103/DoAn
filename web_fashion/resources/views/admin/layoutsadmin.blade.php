@@ -66,19 +66,19 @@
 
                         </li>
 
+       
                         <li class="sidebar-item ">
                             <a href="{{route('product.index')}}" class='sidebar-link'>
                                 <i data-feather="briefcase" width="20"></i>
                                 <span>Sản phẩm</span>
                             </a>                         
                         </li>  
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i data-feather="briefcase" width="20"></i>
+                    
+                            <li class="sidebar-item  has-sub">
+                                <a href="#" class='sidebar-link'>
+                                    <i data-feather="briefcase" width="20"></i>
                                 <span> Danh mục sản phẩm</span>
                             </a>
-
                             <ul class="submenu ">
 
                                 <li>
@@ -145,16 +145,21 @@
                                 <div class="d-lg-inline-block">
                                     <i data-feather="mail"></i>
                                 </div>
-                            </a>
-                            
+                            </a>                        
                         </li>
                         <li class="dropdown">
                             <a href="#" data-bs-toggle="dropdown"
                                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                                 <div class="avatar me-1">
-                                    <img src="{{asset('admin/assets/images/avatar/avatar-s-1.png')}}" alt="" srcset="">
+                                    <img src="{{asset('icon/images.png')}}" alt="" srcset="">
                                 </div>
-                                <div class="d-none d-md-block d-lg-inline-block">Hi, Saugi</div>
+
+                                @if (session('name'))
+                                        <div class="d-none d-md-block d-lg-inline-block">{{session('name')}}</div>
+                                    @else
+                                        <div class="d-none d-md-block d-lg-inline-block">Admin</div>
+                                @endif
+                               
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a class="dropdown-item" href="#"><i data-feather="user"></i> Tài khoản</a>
@@ -211,6 +216,9 @@
             </footer>
         </div>
     </div>
+    @if(!Session::get('name'))
+        <script>window.location = "admin";</script> 
+    @endif
     <script src="{{asset('admin/assets/js/feather-icons/feather.min.js')}}"></script>
     <script src="{{asset('admin/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/app.js')}}"></script>
