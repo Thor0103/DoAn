@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\Api\Home;
 
-use App\Models\product_size; 
-use App\Models\product_sale;
-use App\Models\product_brand; 
-use App\Models\product_type;
 use App\Models\Product;
+use App\Models\product_type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $types = product_type::all();
-        return view('home.home.pages')->with(compact('types'));
+        //
     }
 
     /**
@@ -41,7 +37,7 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-       
+        //
     }
 
     /**
@@ -52,11 +48,12 @@ class HomeController extends Controller
      */
     public function show($id)
     {
+    
         $types = product_type::all();
-        $products = Product::where('Type',$id)->get();
-        return view('home.home.product_type')->with(compact('types','products'));
+        $product_details = Product::with('product_Type','product_Size','product_Sale','product_Brand')->find($id);
+        $product_relates = Product::with('product_Type','product_Size','product_Sale','product_Brand')->where('ProductID' ,'<>', $id)->limit(5)->get();
+        return view('home.home.product_details')->with(compact('types','product_details','product_relates'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *

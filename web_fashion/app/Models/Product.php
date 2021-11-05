@@ -24,6 +24,22 @@ class Product extends Model
     protected $primaryKey = 'ProductID';
     protected $table = 'product';
 
+    public function scopeSearch($query){
+        if(request('key')){
+            $key = request('key');
+            $query = $query->where('ProductName','like','%'.$key.'%');
+            
+        }
+
+        if (request('Type')){
+            $query = $query->where('Type',request('Type'));
+        }
+
+        return $query;
+    }
+
+
+
     public function product_Type(){
         return $this->belongsTo('App\Models\product_type','Type');
     }

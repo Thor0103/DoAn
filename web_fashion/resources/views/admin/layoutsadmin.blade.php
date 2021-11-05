@@ -216,9 +216,9 @@
             </footer>
         </div>
     </div>
-    @if(!Session::get('name'))
+    <!-- @if(!Session::get('name'))
         <script>window.location = "admin";</script> 
-    @endif
+    @endif -->
     <script src="{{asset('admin/assets/js/feather-icons/feather.min.js')}}"></script>
     <script src="{{asset('admin/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/app.js')}}"></script>
@@ -244,8 +244,6 @@
             })
         })
 
-       
-        
         $('#btn-addproduct').click(function(){
             var url = $(this).attr('data-url');            
             $.ajax({

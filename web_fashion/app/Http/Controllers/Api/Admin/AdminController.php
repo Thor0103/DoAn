@@ -44,9 +44,7 @@ class AdminController extends Controller
     }
 
     public function logout()
-    {    
-        Session::put('name',null);
-        Session::put('status',null);
+    {    Session::destroy();
         return view('admin.Authen.login_Admin');
     }
 

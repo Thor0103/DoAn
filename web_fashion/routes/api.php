@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Api\Home\SearchController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,7 +31,18 @@ Route::resource('product-sale','Api\Admin\product_SaleController');
 Route::resource('product','Api\Admin\ProductController');
 
 //Home
-Route::get('home','Api\Home\HomeController@home')->name('home.home');
+Route::resource('home','Api\Home\HomeController');
+Route::resource('product-detalis','Api\Home\ProductController');
+
+//Search
+Route::post('/search-product','Api\Home\SearchController@ajaxSearch')->name('search-product.ajaxSearch');
+
+
+//Cart
+// Route::post('/cart','Api\Home\CartController@addCart')->name('cart.addCart');
+// Route::get('/carts','Api\Home\CartController@showCart')->name('carts.showCart');
+
+
 
 
 
